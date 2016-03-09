@@ -17,6 +17,33 @@
 	</modules>
 
 
+	<!-- ~~~~~ Properties ~~~~~~ -->
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.locales>zh_CN</project.build.locales>
+		<project.build.jdk>1.7</project.build.jdk>
+		
+		
+		<junit.version>4.12</junit.version>
+	</properties>
+
+
+	<!-- ~~~~~ Dependencies ~~~~~ -->
+	<dependencies>
+
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<!-- 表示开发的时候引入，发布的时候不会加载此包 -->
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+
 
 	<!-- ~~~~~ Build ~~~~~ -->
 	<build>

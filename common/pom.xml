@@ -10,4 +10,40 @@
 	<artifactId>common</artifactId>
 	<name>common</name>
 	<description>工具类，资源及其他公用服务提供者</description>
+
+	<properties>
+
+		<apache.common.lang3>3.4</apache.common.lang3>
+		<apache.common.math3>3.6</apache.common.math3>
+		<apache.common.heetclient>4.5.2</apache.common.heetclient>
+
+	</properties>
+
+	<dependencies>
+
+		<!-- ~~~~~ Apache Common libs ~~~~~ -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${apache.common.lang3}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>${apache.common.math3}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${apache.common.heetclient}</version>
+		</dependency>
+
+
+
+
+	</dependencies>
+
+
 </project>
