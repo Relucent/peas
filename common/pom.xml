@@ -16,6 +16,8 @@
 		<apache.common.lang3>3.4</apache.common.lang3>
 		<apache.common.math3>3.6</apache.common.math3>
 		<apache.common.heetclient>4.5.2</apache.common.heetclient>
+		
+		<pinyin4j>2.5.0</pinyin4j>
 
 	</properties>
 
@@ -40,6 +42,15 @@
 			<version>${apache.common.heetclient}</version>
 		</dependency>
 
+
+		<!-- ~~~~~~ Pinyin4j ~~~~~~ -->
+		<dependency>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>${pinyin4j}</version>
+		</dependency>
+
+		
 
 
 
