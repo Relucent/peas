@@ -6,12 +6,23 @@
 		<artifactId>peas</artifactId>
 		<version>1.0</version>
 	</parent>
-	
+
 	<groupId>com.peas.apps.web</groupId>
 	<artifactId>apps-web</artifactId>
 	<packaging>war</packaging>
 	<name>apps-web</name>
 	<description>Apps-web 对外提供访问</description>
-	
-	
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.peas.framework</groupId>
+			<artifactId>framework</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+	</dependencies>
+
+
 </project>

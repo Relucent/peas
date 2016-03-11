@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+
+	<!-- 配置扫描包路径 -->
+	<context:component-scan base-package="com.peas.apps.web">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 会自动注册 DefaultAnnotationHandlerMapping 与 AnnotationMethodHandlerAdapter 两个bean，是SpringMVC为@Controller分发请求所必须的 -->
+
+	<!-- 指定自己定义的 validator -->
+	<mvc:annotation-driven validator="validator" />
+
+	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会自动注册 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<!-- 使用classpath下的 ValidationMessages.properties -->
+		<property name="validationMessageSource" ref="messageSource" />
+
+	</bean>
+
+	<!-- 国际化的消息资源文本 (本系统中主要用于显示/错误消息定制) -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<!-- 在 web 环境中一定要定位到classpath 否则默认到当前web应用下找 -->
+				<value>classpath:conf/message</value>
+				<value>classpath:org/hibernate/validator/ValidationMessages</value>
+			</list>
+		</property>
+		<property name="useCodeAsDefaultMessage" value="false" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="cacheSeconds" value="60" />
+	</bean>
+
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	</mvc:interceptors>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+
+	<!-- 资源文件默认不进行过滤 -->
+	<mvc:resources location="/resource/" mapping="/resource/**" />
+
+	<!-- SpringMVC 提供的注解驱动；它注册了包括 JSR-303校验支持，信息转换以及对域格式化的支持 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<ref bean="mappingJacksonHttpMessageConverter" /> <!-- Json转换器 -->
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- 避免IE执行Ajax时，返回JSON出现下载文件 -->
+	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>text/plain;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- SpringMVC 支持文件上传配置bean -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+
+
+	<!-- Freemarker 视图 -->
+	<!-- <bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"> <property 
+		name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" /> 模糊匹配，配置此项就可以忽略 suffix <property 
+		name="viewNames" value="*.ftl" /> <property name="contentType" value="text/html;charset=utf-8" /> <property name="cache" 
+		value="true" /> <property name="prefix" value="/views/" /> <property name="suffix" value=".html" /> 以下几个属性设置为true，代表请求和会话属性都会被复制到模板的属性文件中，可以使用freemarker的表达式语言来访问并显示 
+		<property name="exposeRequestAttributes" value="true" /> <property name="exposeSessionAttributes" value="true" /> 使用这些宏，必须设置freemarkerViewResolver的exposeSpringMacroHelpers属性为true 
+		<property name="exposeSpringMacroHelpers" value="true" /> order=0代表了第一个匹配的是freemarker的视图解析器，如果匹配不成功，则自动选择order=1的其他解析器，依次类推 
+		<property name="order" value="5" /> </bean> -->
+
+
+
+	<!-- 配置默认视图处理器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 默认情况下InternalResourceViewResolver创建的View对象是InternalResourceView的实例，它只会简单的将请求传递给要渲染的JSP， 我们可以设置viewClass属性将InternalResourceView替换为JstlView -->
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+	<bean id="excelTemplateEngine" class="com.peas.framework.template.excel.ExcelTemplateEngine">
+		<property name="templateLoaderPath" value="/WEB-INF/excel" />
+	</bean>
+
+
+</beans>

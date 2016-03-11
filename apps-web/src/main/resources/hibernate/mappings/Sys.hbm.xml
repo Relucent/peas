@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.ly0199.operation.sys.entity">
+
+
+	<class name="SysUser" table="sys_user" dynamic-insert="true">
+
+		<id name="id" type="integer">
+			<column name="id" />
+			<!-- 指定主键的生成方式， natice：使用本地数据库方式 -->
+			<generator class="native" />
+		</id>
+
+		<property name="username" not-null="true" unique="true" length="50" type="string" column="username" />
+		<property name="password" length="50" type="string" column="password" />
+		<property name="mobile" length="20" type="string" column="mobile" />
+		<property name="phone" length="20" type="string" column="phone" />
+		<property name="name" length="50" type="string" column="name" />
+
+	</class>
+
+</hibernate-mapping>
