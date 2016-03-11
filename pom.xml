@@ -27,7 +27,6 @@
 		<project.build.locales>zh_CN</project.build.locales>
 		<project.build.jdk>1.7</project.build.jdk>
 		
-		
 		<junit.version>4.12</junit.version>
 	</properties>
 
